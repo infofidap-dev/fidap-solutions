@@ -31,22 +31,41 @@ exports.handler = async (event) => {
         subject: "New Contact Form Submission",
 
         html: `
-            <h2>New Contact Request</h2>
+            <table style="width:600px;font-family:Arial;border-collapse:collapse">
+<tr>
+<td style="background:#0F5FA8;color:white;padding:20px">
+<h2>FIDAP Solutions</h2>
+</td>
+</tr>
 
-            <p><strong>Name:</strong> ${data.name}</p>
+<tr>
+<td style="padding:25px">
 
-            <p><strong>Email:</strong> ${data.email}</p>
+<h3>New Contact Request</h3>
 
-            <p><strong>Phone:</strong> ${data.phone}</p>
+<hr>
 
-            <p><strong>Company:</strong> ${data.company}</p>
+<p><b>Name:</b> ${data.name}</p>
 
-            <p><strong>Message:</strong></p>
+<p><b>Email:</b> ${data.email}</p>
 
-            <p>${data.message}</p>
+<p><b>Phone:</b> ${data.phone}</p>
+
+<p><b>Company:</b> ${data.company}</p>
+
+<p><b>Message</b></p>
+
+<p>${data.message}</p>
+
+</td>
+</tr>
+
+</table>
         `
 
     };
+
+    
 
     try {
 
@@ -59,7 +78,31 @@ exports.handler = async (event) => {
             })
         };
 
-    } catch (err) {
+    } 
+    await transporter.sendMail({
+    from: process.env.GMAIL_USER,
+    to: data.email,
+
+    subject: "Thank you for contacting FIDAP Solutions",
+
+    html: `
+        <h2>Hi ${data.name},</h2>
+
+        <p>Thank you for contacting <b>FIDAP Solutions</b>.</p>
+
+        <p>We have received your request successfully.</p>
+
+        <p>Our recruitment team will get back to you within 24 hours.</p>
+
+        <br>
+
+        <b>FIDAP Solutions</b><br>
+        AI Recruitment & Staffing<br>
+        📧 info.fidappharma@gmail.com<br>
+        📞 +1 513-858-5046
+    `
+});
+    catch (err) {
 
         return {
             statusCode: 500,

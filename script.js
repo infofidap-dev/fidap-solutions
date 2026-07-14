@@ -101,7 +101,7 @@ if (stats) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const form = document.querySelector("form[name='contact']");
+    const form = document.getElementById("contactForm");
 
     if (!form) return;
 
@@ -155,15 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (err) {
 
-    console.error("EMAIL ERROR:", err);
+    console.error(err);
 
-    return {
-        statusCode: 500,
-        body: JSON.stringify({
-            message: err.message,
-            stack: err.stack
-        })
-    };
+    alert("❌ Error sending message.");
 
 }
 

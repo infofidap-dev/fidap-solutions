@@ -1,0 +1,23 @@
+{
+  "name": "fidap-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infofidap-dev/fidap-solutions.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/infofidap-dev/fidap-solutions/issues"
+  },
+  "homepage": "https://github.com/infofidap-dev/fidap-solutions#readme",
+  "dependencies": {
+    "nodemailer": "^9.0.3"
+  }
+}

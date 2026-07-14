@@ -100,3 +100,72 @@ statObserver.disconnect();
 
 statObserver.observe(stats);
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.querySelector("form[name='contact']");
+
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+
+        e.preventDefault();
+
+        const button = form.querySelector("button");
+
+        button.disabled = true;
+        button.innerHTML = "Sending...";
+
+        const data = {
+
+            name: form.querySelector("[name='name']").value,
+            email: form.querySelector("[name='email']").value,
+            phone: form.querySelector("[name='phone']").value,
+            company: form.querySelector("[name='company']").value,
+            message: form.querySelector("[name='message']").value
+
+        };
+
+        try {
+
+            const response = await fetch("/.netlify/functions/send-email", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(data)
+
+            });
+
+            if (response.ok) {
+
+                alert("✅ Message sent successfully!");
+
+                form.reset();
+
+            } else {
+
+                const error = await response.text();
+                console.error(error);
+
+                alert("❌ Failed to send message.");
+
+            }
+
+        } catch (err) {
+
+            console.error(err);
+
+            alert("❌ Error sending message.");
+
+        }
+
+        button.disabled = false;
+
+        button.innerHTML = "Send Message";
+
+    });
+
+});

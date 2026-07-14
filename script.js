@@ -58,47 +58,46 @@ counter.innerText="0";
 
 });
 
-const stats=document.querySelector(".stats");
+const stats = document.querySelector(".stats");
 
-const statObserver=new IntersectionObserver(entries=>{
+if (stats) {
+    const statObserver = new IntersectionObserver(entries => {
 
-if(entries[0].isIntersecting){
+        if (entries[0].isIntersecting) {
 
-counters.forEach(counter=>{
+            counters.forEach(counter => {
 
-const target=counter.dataset.target;
+                const target = counter.dataset.target;
+                let current = 0;
+                const end = parseInt(target);
 
-let current=0;
+                const timer = setInterval(() => {
 
-const end=parseInt(target);
+                    current += Math.ceil(end / 50);
 
-const timer=setInterval(()=>{
+                    if (current >= end) {
 
-current+=Math.ceil(end/50);
+                        counter.innerHTML = target;
+                        clearInterval(timer);
 
-if(current>=end){
+                    } else {
 
-counter.innerHTML=target;
+                        counter.innerHTML = current;
 
-clearInterval(timer);
+                    }
 
-}else{
+                }, 30);
 
-counter.innerHTML=current;
+            });
 
+            statObserver.disconnect();
+
+        }
+
+    });
+
+    statObserver.observe(stats);
 }
-
-},30);
-
-});
-
-statObserver.disconnect();
-
-}
-
-});
-
-statObserver.observe(stats);
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -156,11 +155,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (err) {
 
-            console.error(err);
+    console.error("EMAIL ERROR:", err);
 
-            alert("❌ Error sending message.");
+    return {
+        statusCode: 500,
+        body: JSON.stringify({
+            message: err.message,
+            stack: err.stack
+        })
+    };
 
-        }
+}
 
         button.disabled = false;
 

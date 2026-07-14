@@ -5,13 +5,24 @@ exports.handler = async (event) => {
     if (event.httpMethod !== "POST") {
         return {
             statusCode: 405,
-            body: "Method Not Allowed"
+            body: JSON.stringify({
+                message: "Method Not Allowed"
+            })
         };
     }
 
     try {
 
         const data = JSON.parse(event.body);
+
+        if (!data.name || !data.email || !data.message) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({
+                    message: "Name, Email and Message are required."
+                })
+            };
+        }
 
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -21,73 +32,205 @@ exports.handler = async (event) => {
             }
         });
 
+        // ==========================
         // Email to FIDAP
+        // ==========================
+
         await transporter.sendMail({
 
-            from: process.env.GMAIL_USER,
+            from: `"FIDAP Solutions Website" <${process.env.GMAIL_USER}>`,
+
             to: process.env.GMAIL_USER,
 
-            subject: "New Contact Form Submission",
+            replyTo: data.email,
+
+            subject: `📩 New Contact Form Submission - ${data.name}`,
 
             html: `
-            <table style="width:600px;font-family:Arial;border-collapse:collapse">
 
-                <tr>
-                    <td style="background:#0F5FA8;color:white;padding:20px">
-                        <h2>FIDAP Solutions</h2>
-                    </td>
-                </tr>
+            <div style="font-family:Arial,sans-serif;background:#f5f7fb;padding:30px;">
 
-                <tr>
-                    <td style="padding:25px">
+                <table style="max-width:650px;width:100%;margin:auto;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);">
 
-                        <h3>New Contact Request</h3>
+                    <tr>
 
-                        <hr>
+                        <td style="background:#0F5FA8;text-align:center;padding:25px;">
 
-                        <p><b>Name:</b> ${data.name}</p>
+                            <img src="https://fidap-solutions.netlify.app/images/logo1.png"
+                                 width="220">
 
-                        <p><b>Email:</b> ${data.email}</p>
+                        </td>
 
-                        <p><b>Phone:</b> ${data.phone}</p>
+                    </tr>
 
-                        <p><b>Company:</b> ${data.company}</p>
+                    <tr>
 
-                        <p><b>Message:</b></p>
+                        <td style="padding:30px;">
 
-                        <p>${data.message}</p>
+                            <h2 style="color:#0F5FA8;margin-top:0;">
+                                New Contact Request
+                            </h2>
 
-                    </td>
-                </tr>
+                            <table style="width:100%;border-collapse:collapse;">
 
-            </table>
+                                <tr>
+                                    <td><b>Name</b></td>
+                                    <td>${data.name}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Email</b></td>
+                                    <td>${data.email}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Phone</b></td>
+                                    <td>${data.phone || "-"}</td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Company</b></td>
+                                    <td>${data.company || "-"}</td>
+                                </tr>
+
+                            </table>
+
+                            <hr>
+
+                            <h3>Message</h3>
+
+                            <p style="line-height:1.7;">
+                                ${data.message}
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td style="background:#f4f4f4;padding:20px;font-size:13px;color:#666;text-align:center;">
+
+                            FIDAP Solutions<br>
+
+                            AI Recruitment • Staffing • Career Solutions<br><br>
+
+                            📧 info.fidappharma@gmail.com<br>
+
+                            📞 +1 513-858-5046<br>
+
+                            🌐 https://fidap-solutions.netlify.app
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
             `
 
         });
 
-        // Auto reply to customer
+        // ==========================
+        // Auto Reply
+        // ==========================
+
         await transporter.sendMail({
 
-            from: process.env.GMAIL_USER,
+            from: `"FIDAP Solutions" <${process.env.GMAIL_USER}>`,
+
             to: data.email,
 
             subject: "Thank you for contacting FIDAP Solutions",
 
             html: `
-                <h2>Hi ${data.name},</h2>
 
-                <p>Thank you for contacting <b>FIDAP Solutions</b>.</p>
+            <div style="font-family:Arial,sans-serif;background:#f5f7fb;padding:30px;">
 
-                <p>We have received your request successfully.</p>
+                <table style="max-width:650px;width:100%;margin:auto;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);">
 
-                <p>Our recruitment team will get back to you within 24 hours.</p>
+                    <tr>
 
-                <br>
+                        <td style="background:#0F5FA8;text-align:center;padding:25px;">
 
-                <b>FIDAP Solutions</b><br>
-                AI Recruitment & Staffing<br>
-                📧 info.fidappharma@gmail.com<br>
-                📞 +1 513-858-5046
+                            <img src="https://fidap-solutions.netlify.app/images/logo1.png"
+                                 width="220">
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td style="padding:35px;">
+
+                            <h2 style="color:#0F5FA8;">
+                                Hi ${data.name},
+                            </h2>
+
+                            <p>
+
+                                Thank you for contacting
+                                <strong>FIDAP Solutions</strong>.
+
+                            </p>
+
+                            <p>
+
+                                We have successfully received your message.
+
+                            </p>
+
+                            <p>
+
+                                Our recruitment team will review your request
+                                and respond within
+                                <strong>24 business hours.</strong>
+
+                            </p>
+
+                            <br>
+
+                            <a href="https://fidap-solutions.netlify.app"
+
+                               style="background:#0F5FA8;color:#fff;padding:12px 22px;text-decoration:none;border-radius:5px;display:inline-block;">
+
+                                Visit Our Website
+
+                            </a>
+
+                            <br><br>
+
+                            Regards,<br>
+
+                            <strong>FIDAP Solutions Team</strong>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td style="background:#f4f4f4;padding:20px;font-size:13px;color:#666;text-align:center;">
+
+                            AI Recruitment • Staffing • Career Solutions<br><br>
+
+                            📧 info.fidappharma@gmail.com<br>
+
+                            📞 +1 513-858-5046<br>
+
+                            🌐 https://fidap-solutions.netlify.app
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
             `
 
         });
@@ -95,18 +238,20 @@ exports.handler = async (event) => {
         return {
             statusCode: 200,
             body: JSON.stringify({
-                success: true
+                success: true,
+                message: "Emails sent successfully."
             })
         };
 
     } catch (err) {
 
-        console.error(err);
+        console.error("EMAIL ERROR:", err);
 
         return {
             statusCode: 500,
             body: JSON.stringify({
-                error: err.message
+                success: false,
+                message: err.message
             })
         };
 

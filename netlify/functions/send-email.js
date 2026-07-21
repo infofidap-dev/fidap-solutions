@@ -194,8 +194,8 @@ AI Recruitment • Staffing • Career Solutions
 <br><br>
 
 📧
-<a href="mailto:info.fidappharma@gmail.com">
-info.fidappharma@gmail.com
+<a href="mailto:info.fidapsolutions@gmail.com">
+info.fidapsolutions@gmail.com
 </a>
 
 <br>
@@ -363,8 +363,8 @@ AI Recruitment • Staffing • Career Solutions
 <br><br>
 
 📧
-<a href="mailto:info.fidappharma@gmail.com">
-info.fidappharma@gmail.com
+<a href="mailto:info.fidapsolutions@gmail.com">
+info.fidapsolutions@gmail.com
 </a>
 
 <br>

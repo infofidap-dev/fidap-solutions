@@ -103,7 +103,7 @@ box-shadow:0 5px 20px rgba(0,0,0,.08);">
 <td style="background:#0F5FA8;padding:30px;text-align:center;">
 
 <img
-src="https://fidap-solutions.netlify.app/images/logo1.png"
+src="https://fidap-solutions.com/images/logo1.png"
 width="230"
 alt="FIDAP Solutions">
 
@@ -208,8 +208,8 @@ info.fidapsolutions@gmail.com
 <br>
 
 🌐
-<a href="https://fidap-solutions.netlify.app">
-fidap-solutions.netlify.app
+<a href="https://fidap-solutions.com">
+fidap-solutions.com
 </a>
 
 </td>
@@ -246,7 +246,7 @@ We have successfully received your message.
 Our recruitment team will review your request and contact you within 24 business hours.
 
 Website:
-https://fidap-solutions.netlify.app
+https://fidap-solutions.com
 
 Regards,
 FIDAP Solutions
@@ -265,7 +265,7 @@ box-shadow:0 5px 20px rgba(0,0,0,.08);">
 <td style="background:#0F5FA8;padding:30px;text-align:center;">
 
 <img
-src="https://fidap-solutions.netlify.app/images/logo1.png"
+src="https://fidap-solutions.com/images/logo1.png"
 width="230"
 alt="FIDAP">
 
@@ -312,7 +312,7 @@ If your enquiry is urgent, feel free to contact us directly.
 <div style="margin:35px 0;">
 
 <a
-href="https://fidap-solutions.netlify.app"
+href="https://fidap-solutions.com"
 style="
 background:#0F5FA8;
 color:white;
@@ -377,8 +377,8 @@ info.fidapsolutions@gmail.com
 <br>
 
 🌐
-<a href="https://fidap-solutions.netlify.app">
-fidap-solutions.netlify.app
+<a href="https://fidap-solutions.com">
+fidap-solutions.com
 </a>
 
 </td>
